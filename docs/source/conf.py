@@ -29,12 +29,12 @@ autoapi_dirs = ["../../src"]
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = "{{PROJECT_NAME}}"
+project = "ds-common-serde-py-lib"
 copyright = "2025, Aider AS"
-author = "{{AUTHOR_NAME}}"
+author = "Kristoffer Varslott"
 
 try:
-    version = pkg_version("{{PROJECT_NAME}}")
+    version = pkg_version("ds-common-serde-py-lib")
 except PackageNotFoundError:
     try:
         import tomllib
