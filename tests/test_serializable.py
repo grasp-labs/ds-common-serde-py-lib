@@ -15,6 +15,7 @@ from uuid import UUID, uuid4
 
 import pytest
 
+from ds_common_serde_py_lib.errors import DeserializationError, SerializationError
 from ds_common_serde_py_lib.serializable import Serializable
 
 
@@ -144,8 +145,9 @@ def test_serialize_non_dataclass_raises():
     class PlainSerializable(Serializable):
         pass
 
-    with pytest.raises(TypeError):
+    with pytest.raises(SerializationError) as exc:
         PlainSerializable().serialize()
+    assert exc.value.details.get("class_name") == "PlainSerializable"
 
 
 def test_deserialize_non_dataclass_raises():
@@ -154,9 +156,9 @@ def test_deserialize_non_dataclass_raises():
     class NonDataclassSerializable(Serializable):
         __module__ = "tests.libs.models.test_serializable"
 
-    with pytest.raises(Exception) as exc:
+    with pytest.raises(DeserializationError) as exc:
         NonDataclassSerializable.deserialize({"value": 1})
-    assert "NonDataclassSerializable" in str(exc.value)
+    assert exc.value.details.get("class_name") == "NonDataclassSerializable"
 
 
 def test_deserialize_sets_init_false_fields():

@@ -17,7 +17,8 @@ Example
 
 from importlib.metadata import version
 
+from .errors import DeserializationError, SerializationError
 from .serializable import Serializable
 
 __version__ = version("ds-common-serde-py-lib")
-__all__ = ["Serializable", "__version__"]
+__all__ = ["DeserializationError", "Serializable", "SerializationError", "__version__"]
