@@ -28,10 +28,9 @@ Example
 
 from __future__ import annotations
 
-import logging
 from typing import TYPE_CHECKING, Any, ClassVar, TypeVar
 
-from ds_common_logger_py_lib import LoggingMixin
+from ds_common_logger_py_lib import Logger
 
 from ._serializable_deserialize import (
     _build_type_var_map,
@@ -48,12 +47,13 @@ if TYPE_CHECKING:  # pragma: no cover
 
 T = TypeVar("T", bound="Serializable")
 
+logger = Logger.get_logger(__name__,package=True)
 
-class Serializable(LoggingMixin):
+class Serializable(logger):
     """Mixin providing ``serialize``/``deserialize`` for dataclasses."""
 
     __deserializers__: ClassVar[dict[str, Any]] = {}
-    log_level = logging.DEBUG
+    
 
     def serialize(self) -> dict[str, Any]:
         """

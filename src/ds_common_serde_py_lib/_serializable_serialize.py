@@ -25,7 +25,7 @@ Example
 """
 
 from __future__ import annotations
-
+from ds_common_logger_py_lib import Logger
 from collections.abc import Mapping
 from dataclasses import fields as dc_fields
 from dataclasses import is_dataclass
@@ -34,7 +34,7 @@ from enum import Enum
 from typing import Any
 from uuid import UUID
 
-from ds_common_logger_py_lib import Logger
+
 
 logger = Logger.get_logger(__name__)
 
