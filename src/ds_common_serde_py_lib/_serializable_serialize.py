@@ -36,7 +36,7 @@ from uuid import UUID
 
 from ds_common_logger_py_lib import Logger
 
-logger = Logger.get_logger(__name__)
+logger = Logger.get_logger(__name__, package=True)
 
 
 def _serialize_value(value: Any) -> Any:

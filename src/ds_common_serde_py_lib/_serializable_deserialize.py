@@ -37,7 +37,7 @@ from ds_common_logger_py_lib import Logger
 
 from ._serializable_convert import _convert_value
 
-logger = Logger.get_logger(__name__)
+logger = Logger.get_logger(__name__, package=True)
 
 TypeVarType = type(TypeVar("_T_RUNTIME_MARKER_"))
 

@@ -4,12 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ds-common-serde-py-lib"
-version = "0.1.0-alpha.2"
+version = "0.1.0-alpha.3"
 description = "A Python package from the DS library collection"
 dependencies = [
-    "ds-common-logger-py-lib>=0.1.0a1,<1.0.0",
+    "ds-common-logger-py-lib>=0.1.0-alpha.5,<1.0.0",
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 license = "Apache-2.0"
 license-files = ["LICENSE-APACHE"]
 keywords = ["ds", "python"]
@@ -50,6 +50,7 @@ dev = [
     "sphinx>=7.1.0",
     "sphinx-autoapi>=3.0.0",
     "sphinx-material>=0.0.35",
+    "bandit>=1.7.0"
 ]
 test = [
     "pytest>=7.4.0",
