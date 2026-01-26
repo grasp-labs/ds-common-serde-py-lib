@@ -36,7 +36,7 @@ from uuid import UUID
 
 
 
-logger = Logger.get_logger(__name__)
+logger = Logger.get_logger(__name__, package=True)
 
 
 def _serialize_value(value: Any) -> Any:
@@ -69,6 +69,7 @@ def _serialize_value(value: Any) -> Any:
             return value.serialize()
         except Exception as exc:
             logger.debug("Failed to serialize object %s: %s", type(value).__name__, exc)
+            logger.level(logger.DEBUG)
     if isinstance(value, Mapping):
         return {k: _serialize_value(v) for k, v in value.items()}
     if isinstance(value, (list, tuple, set)):
