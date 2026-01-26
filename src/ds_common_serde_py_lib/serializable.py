@@ -47,9 +47,9 @@ if TYPE_CHECKING:  # pragma: no cover
 
 T = TypeVar("T", bound="Serializable")
 
-logger = Logger.get_logger(__name__,package=True)
+logger = Logger.get_logger(__name__, package=True)
 
-class Serializable(logger):
+class Serializable:
     """Mixin providing ``serialize``/``deserialize`` for dataclasses."""
 
     __deserializers__: ClassVar[dict[str, Any]] = {}
