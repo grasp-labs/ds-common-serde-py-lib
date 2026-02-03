@@ -7,7 +7,7 @@ Description
 Tests for ``_serializable_serialize`` (``_serialize_value``).
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 from uuid import uuid4
@@ -44,3 +44,14 @@ def test_serialize_value_falls_back_when_object_serialize_raises():
 
     obj = RaisesSerialize()
     assert _serialize_value(obj) is obj
+
+
+def test_serialize_value_omits_fields_marked_serialize_false():
+    """Fields with metadata {'serialize': False} should be omitted from the output."""
+
+    @dataclass
+    class WithSecret(Serializable):
+        a: int
+        secret: str = field(default="shh", metadata={"serialize": False})
+
+    assert _serialize_value(WithSecret(a=1, secret="nope")) == {"a": 1}

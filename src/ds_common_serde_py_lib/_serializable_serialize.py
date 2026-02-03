@@ -62,6 +62,8 @@ def _serialize_value(value: Any) -> Any:
     if is_dataclass(value):
         result: dict[str, Any] = {}
         for f in dc_fields(value):
+            if f.metadata.get("serialize") is False:
+                continue
             result[f.name] = _serialize_value(getattr(value, f.name))
         return result
     if hasattr(value, "serialize") and callable(value.serialize):
