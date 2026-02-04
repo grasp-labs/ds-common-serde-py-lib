@@ -39,6 +39,30 @@ from ds_common_logger_py_lib import Logger
 logger = Logger.get_logger(__name__, package=True)
 
 
+def _serialize_dataclass(value: Any) -> dict[str, Any]:
+    """Serialize a dataclass instance to a dict, respecting serialize/mask metadata.
+
+    Args:
+        value: The dataclass instance to serialize.
+
+    Returns:
+        The serialized dataclass.
+    """
+    result: dict[str, Any] = {}
+    for f in dc_fields(value):
+        if f.metadata.get("serialize") is False:
+            continue
+        mask = f.metadata.get("mask")
+        if mask is True:
+            result[f.name] = "********"
+            continue
+        if isinstance(mask, str):
+            result[f.name] = mask
+            continue
+        result[f.name] = _serialize_value(getattr(value, f.name))
+    return result
+
+
 def _serialize_value(value: Any) -> Any:
     """Recursively serialize common Python types and dataclasses.
 
@@ -60,12 +84,7 @@ def _serialize_value(value: Any) -> Any:
     if isinstance(value, datetime):
         return value.isoformat()
     if is_dataclass(value):
-        result: dict[str, Any] = {}
-        for f in dc_fields(value):
-            if f.metadata.get("serialize") is False:
-                continue
-            result[f.name] = _serialize_value(getattr(value, f.name))
-        return result
+        return _serialize_dataclass(value)
     if hasattr(value, "serialize") and callable(value.serialize):
         try:
             return value.serialize()

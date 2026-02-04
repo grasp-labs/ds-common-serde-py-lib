@@ -55,3 +55,25 @@ def test_serialize_value_omits_fields_marked_serialize_false():
         secret: str = field(default="shh", metadata={"serialize": False})
 
     assert _serialize_value(WithSecret(a=1, secret="nope")) == {"a": 1}
+
+
+def test_serialize_value_masks_fields_marked_mask_true():
+    """Fields with metadata {'mask': True} are included with placeholder '********'."""
+
+    @dataclass
+    class WithMasked(Serializable):
+        a: int
+        secret: str = field(default="shh", metadata={"mask": True})
+
+    assert _serialize_value(WithMasked(a=1, secret="nope")) == {"a": 1, "secret": "********"}
+
+
+def test_serialize_value_masks_fields_with_custom_placeholder():
+    """Fields with metadata {'mask': '<str>'} use that string as the serialized value."""
+
+    @dataclass
+    class WithCustomMask(Serializable):
+        a: int
+        token: str = field(default="", metadata={"mask": "••••••••"})
+
+    assert _serialize_value(WithCustomMask(a=1, token="jwt-xyz")) == {"a": 1, "token": "••••••••"}
