@@ -12,6 +12,7 @@ Example
 .. code-block:: python
 
     from dataclasses import dataclass
+    from dataclasses import field
 
     from ds_common_serde_py_lib import Serializable
 
@@ -24,6 +25,19 @@ Example
     payload = Child(count=1).serialize()
     obj = Child.deserialize(payload)
     assert obj == Child(count=1)
+
+Field omission
+--------------
+You can omit specific dataclass fields from serialization by setting field metadata:
+
+.. code-block:: python
+
+    @dataclass
+    class Example(Serializable):
+        a: int
+        secret: str = field(metadata={"serialize": False})
+
+    assert Example(a=1, secret="shh").serialize() == {"a": 1}
 """
 
 from __future__ import annotations
