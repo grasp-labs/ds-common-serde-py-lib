@@ -482,7 +482,7 @@ wheels = [
 
 [[package]]
 name = "ds-common-serde-py-lib"
-version = "0.1.0a4"
+version = "0.1.0b1"
 source = { editable = "." }
 dependencies = [
     { name = "ds-common-logger-py-lib" },
