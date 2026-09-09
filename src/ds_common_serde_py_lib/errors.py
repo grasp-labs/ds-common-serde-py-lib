@@ -13,7 +13,7 @@ Example
     from ds_common_serde_py_lib.errors import DeserializationError, SerializationError
 
     ser_exc = SerializationError()
-    assert ser_exc.status_code == 500
+    assert ser_exc.status_code == 400
     assert ser_exc.message == "Serialization failed"
     assert ser_exc.code == "DS_SERIALIZATION_ERROR"
     assert ser_exc.details == {}
@@ -32,7 +32,7 @@ class SerdeError(Exception):
         self,
         message: str,
         code: str,
-        status_code: int = 500,
+        status_code: int = 400,
         details: dict[str, Any] | None = None,
     ) -> None:
         """
@@ -63,7 +63,7 @@ class SerializationError(SerdeError):
         self,
         message: str = "Serialization failed",
         code: str = "DS_SERIALIZATION_ERROR",
-        status_code: int = 500,
+        status_code: int = 400,
         details: dict[str, Any] | None = None,
     ) -> None:
         super().__init__(message=message, code=code, status_code=status_code, details=details)
@@ -76,7 +76,7 @@ class DeserializationError(SerdeError):
         self,
         message: str = "Deserialization failed",
         code: str = "DS_DESERIALIZATION_ERROR",
-        status_code: int = 500,
+        status_code: int = 400,
         details: dict[str, Any] | None = None,
     ) -> None:
         """
