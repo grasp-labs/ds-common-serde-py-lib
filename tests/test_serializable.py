@@ -147,6 +147,7 @@ def test_serialize_non_dataclass_raises():
 
     with pytest.raises(SerializationError) as exc:
         PlainSerializable().serialize()
+    assert exc.value.status_code == 400
     assert exc.value.details.get("class_name") == "PlainSerializable"
 
 
@@ -158,6 +159,7 @@ def test_deserialize_non_dataclass_raises():
 
     with pytest.raises(DeserializationError) as exc:
         NonDataclassSerializable.deserialize({"value": 1})
+    assert exc.value.status_code == 400
     assert exc.value.details.get("class_name") == "NonDataclassSerializable"
 
 
